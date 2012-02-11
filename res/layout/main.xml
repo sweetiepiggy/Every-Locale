@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2012 Sweetie Piggy Apps <sweetiepiggyapps@gmail.com>
+
+    This file is part of Every Locale.
+
+	Every Locale is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    Every Locale is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Every Locale; if not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+					
+			<TextView
+				android:id="@+id/set_language_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:textStyle="bold"
+				android:text="@string/language" />
+			<AutoCompleteTextView
+				android:id="@+id/language_autocomplete"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:drawableLeft="@android:drawable/ic_btn_speak_now"
+				android:layout_weight="1"
+				android:text="" />	
+        
+			<TextView
+				android:id="@+id/set_country_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:textStyle="bold"
+				android:text="@string/country" />
+			<AutoCompleteTextView
+				android:id="@+id/country_autocomplete"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableLeft="@android:drawable/ic_menu_myplaces"
+				android:text="" />
+			
+			<TextView
+				android:id="@+id/variant_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:textStyle="bold"
+				android:text="@string/variant" />
+			<AutoCompleteTextView
+				android:id="@+id/variant_edittext"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="" />	
+			
+			<Button
+				android:id="@+id/save_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableTop="@android:drawable/ic_menu_save" />
+			
+			
+	</LinearLayout>
+    
+</ScrollView>

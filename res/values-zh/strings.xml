@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2012 Sweetie Piggy Apps <sweetiepiggyapps@gmail.com>
+
+    This file is part of Every Locale.
+
+	Every Locale is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    Every Locale is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Every Locale; if not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+	<string name="app_name">各个地区</string>
+    <string name="language">语</string>
+    <string name="country">国家</string>
+    <string name="variant">变种</string>
+    <string name="about">关于</string>
+    <string name="gpl">
+	Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
+
+	Every Locale is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.\n\n
+
+    Every Locale is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.\n\n
+
+    You should have received a copy of the GNU General Public License
+    along with Every Locale; if not, see http://www.gnu.org/licenses/.  
+    </string>
+</resources>
