@@ -19,11 +19,11 @@
 -->
 <resources>
 
-    <string name="app_name">Lokal Setiap</string>
+    <string name="app_name">Setiap Lokal</string>
     <string name="language">Bahasa</string>
     <string name="country">Negara</string>
     <string name="variant">Varian</string>
-    <string name="about">Kira-kira</string>
+    <string name="about">Maklumat</string>
     <string name="gpl">
 	Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 
