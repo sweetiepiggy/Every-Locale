@@ -87,7 +87,6 @@
 				android:id="@+id/save_button"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_weight="1"
 				android:drawableTop="@android:drawable/ic_menu_save" />
 			<Button
 				android:id="@+id/cancel_button"

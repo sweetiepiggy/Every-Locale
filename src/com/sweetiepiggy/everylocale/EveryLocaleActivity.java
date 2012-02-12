@@ -42,71 +42,14 @@ public class EveryLocaleActivity extends Activity {
 	HashMap<String, String> language_map = new HashMap<String, String>();
 	HashMap<String, String> country_map = new HashMap<String, String>();
 	
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Locale default_locale = Locale.getDefault();
-        
-        ArrayAdapter<String> language_names = new ArrayAdapter<String>(this,
-        		R.layout.list_language_names);
-
-        for (String language : Locale.getISOLanguages()) {
-        		Locale locale = new Locale(language);
-        		String local_name = locale.getDisplayLanguage();
-        		String native_name = locale.getDisplayLanguage(locale);
-        		
-        		language_names.add(language);
-        		
-        		if (!local_name.equals(language)) {
-        			language_names.add(local_name);
-        		}
-        		
-        		language_map.put(local_name, language);
-        		if (!local_name.equals(native_name)) {
-        			language_names.add(native_name);
-            		language_map.put(native_name, language);
-        		}
-        }
-        
-        ArrayAdapter<String> country_names = new ArrayAdapter<String>(this,
-        		R.layout.list_country_names);
-
-        String default_language = default_locale.getLanguage();
-        
-        for (String country : Locale.getISOCountries()) {
-        		Locale locale = new Locale(default_language, country);
-        		String local_name = locale.getDisplayCountry();
-        		String native_name = locale.getDisplayCountry(locale);
-        		
-        		country_names.add(country);
-        		
-        		if (!local_name.equals(country)) {
-        			country_names.add(local_name);
-        		}
-        		
-        		country_map.put(local_name, country);
-        		if (!local_name.equals(native_name)) {
-        			country_names.add(native_name);
-            		country_map.put(native_name, country);
-        		}
-        }
-        
-        AutoCompleteTextView languageTextView = (AutoCompleteTextView) findViewById(R.id.language_autocomplete);
-        languageTextView.setAdapter(language_names);
-        
-        AutoCompleteTextView countryTextView = (AutoCompleteTextView) findViewById(R.id.country_autocomplete);
-        countryTextView.setAdapter(country_names);
-        
-        String language_name = default_locale.getDisplayLanguage();
-        String country_name = default_locale.getDisplayCountry();
-        String variant_code = default_locale.getVariant();
-        
-        ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
-        ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
-        ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
+        init();
         
     	Button save_button = (Button)findViewById(R.id.save_button);
 
@@ -137,6 +80,7 @@ public class EveryLocaleActivity extends Activity {
     				args[0] = Configuration.class;  
     				Method updateConfiguration =  am.getClass().getMethod("updateConfiguration", args);  
     				updateConfiguration.invoke(am, config);
+    				init();
     			} catch (Exception e) {
     			}
     		}
@@ -178,5 +122,77 @@ public class EveryLocaleActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void init() {
+        create_language_list();
+        create_country_list();
+
+        Locale default_locale = Locale.getDefault();
+        String language_name = default_locale.getDisplayLanguage();
+        String country_name = default_locale.getDisplayCountry();
+        String variant_code = default_locale.getVariant();
+        
+        ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
+        ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
+        ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
+	}
+	
+	private void create_language_list() {
+		language_map.clear();
+		
+		ArrayAdapter<String> language_names = new ArrayAdapter<String>(this,
+	        		R.layout.list_language_names);
+
+	        for (String language : Locale.getISOLanguages()) {
+	        		Locale locale = new Locale(language);
+	        		String local_name = locale.getDisplayLanguage();
+	        		String native_name = locale.getDisplayLanguage(locale);
+	        		
+	        		language_names.add(language);
+	        		
+	        		if (!local_name.equals(language)) {
+	        			language_names.add(local_name);
+	        		}
+	        		
+	        		language_map.put(local_name, language);
+	        		if (!local_name.equals(native_name)) {
+	        			language_names.add(native_name);
+	            		language_map.put(native_name, language);
+	        		}
+	        }
+	        
+	        AutoCompleteTextView languageTextView = (AutoCompleteTextView) findViewById(R.id.language_autocomplete);
+	        languageTextView.setAdapter(language_names);
+	}
+	
+	private void create_country_list() {
+		country_map.clear();
+		
+        ArrayAdapter<String> country_names = new ArrayAdapter<String>(this,
+        		R.layout.list_country_names);
+
+        String default_language = Locale.getDefault().getLanguage();
+        
+        for (String country : Locale.getISOCountries()) {
+        		Locale locale = new Locale(default_language, country);
+        		String local_name = locale.getDisplayCountry();
+        		String native_name = locale.getDisplayCountry(locale);
+        		
+        		country_names.add(country);
+        		
+        		if (!local_name.equals(country)) {
+        			country_names.add(local_name);
+        		}
+        		
+        		country_map.put(local_name, country);
+        		if (!local_name.equals(native_name)) {
+        			country_names.add(native_name);
+            		country_map.put(native_name, country);
+        		}
+        }
+        
+        AutoCompleteTextView countryTextView = (AutoCompleteTextView) findViewById(R.id.country_autocomplete);
+        countryTextView.setAdapter(country_names);
 	}
 }
