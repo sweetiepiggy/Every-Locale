@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class EveryLocaleActivity extends Activity {
@@ -101,17 +102,19 @@ public class EveryLocaleActivity extends Activity {
         
         String language_name = default_locale.getDisplayLanguage();
         String country_name = default_locale.getDisplayCountry();
+        String variant_code = default_locale.getVariant();
         
         ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
         ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
+        ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
         
-    	Button submit_button = (Button)findViewById(R.id.save_button);
+    	Button save_button = (Button)findViewById(R.id.save_button);
 
-    	submit_button.setOnClickListener(new View.OnClickListener() {
+    	save_button.setOnClickListener(new View.OnClickListener() {
     		public void onClick(View v) {
     			String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
     			String country = ((AutoCompleteTextView) findViewById(R.id.country_autocomplete)).getText().toString();
-    			String variant = ((AutoCompleteTextView) findViewById(R.id.variant_edittext)).getText().toString();
+    			String variant = ((EditText) findViewById(R.id.variant_edittext)).getText().toString();
     			
     			String language_code = language_map.containsKey(language) ? language_map.get(language) : language;
     			String country_code = country_map.containsKey(country) ? country_map.get(country) : country;
@@ -136,6 +139,22 @@ public class EveryLocaleActivity extends Activity {
     				updateConfiguration.invoke(am, config);
     			} catch (Exception e) {
     			}
+    		}
+    	});
+    	
+    	
+    	Button cancel_button = (Button)findViewById(R.id.cancel_button);
+
+    	cancel_button.setOnClickListener(new View.OnClickListener() {
+    		public void onClick(View v) {
+    	        Locale default_locale = Locale.getDefault();
+    	        String language_name = default_locale.getDisplayLanguage();
+    	        String country_name = default_locale.getDisplayCountry();
+    	        String variant_code = default_locale.getVariant();
+    	        
+    	        ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
+    	        ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
+    	        ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
     		}
     	});
     }
