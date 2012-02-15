@@ -27,10 +27,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -96,9 +99,36 @@ public class EveryLocaleActivity extends Activity {
     	        String country_name = default_locale.getDisplayCountry();
     	        String variant_code = default_locale.getVariant();
     	        
-    	        ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
-    	        ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
+
+    	        AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
+    	        language_autocomplete.setText(language_name);
+
+    	        AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
+    	        country_autocomplete.setText(country_name);
     	        ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
+    	        
+    	        /* don't pop up drop down menu when programmatically entering text */
+    	        language_autocomplete.setDropDownHeight(0);
+    	        language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+    	            public boolean onTouch(View v, MotionEvent event) {
+    	            	AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
+    	                language_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
+    	            	language_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
+    	            	language_autocomplete.onTouchEvent(event);
+    	            	return true;
+    	            } 
+    	        });	
+    	        
+    	        country_autocomplete.setDropDownHeight(0);
+    	        country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+    	            public boolean onTouch(View v, MotionEvent event) {
+    	            	AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
+    	                country_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
+    	            	country_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
+    	            	country_autocomplete.onTouchEvent(event);
+    	            	return true;
+    	            } 
+    	        });	
     		}
     	});
     }
@@ -133,9 +163,23 @@ public class EveryLocaleActivity extends Activity {
         String country_name = default_locale.getDisplayCountry();
         String variant_code = default_locale.getVariant();
         
-        ((AutoCompleteTextView)findViewById(R.id.language_autocomplete)).setText(language_name);
+        AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
+        language_autocomplete.setText(language_name);
         ((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
         ((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
+
+        language_autocomplete.setInputType(InputType.TYPE_NULL);
+        language_autocomplete.setDropDownHeight(0);
+
+        language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+            	AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
+                language_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
+            	language_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
+            	language_autocomplete.onTouchEvent(event);
+            	return true;
+            } 
+        });	
 	}
 	
 	private void create_language_list() {
