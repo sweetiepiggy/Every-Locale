@@ -19,6 +19,21 @@
 
 --------------------------------------------------------------------------------
 
+    DESCRIPTION
+
+    Change the locale (language/country/variant) of your phone. That's all.
+    This app does one thing and does it well.
+
+    Take note that if a locale is not supported by your phone or your app
+    then you may not notice any change.
+
+    The only permission required by this app is CHANGE_CONFIGURATION, which is
+    needed to change the locale. There are no ads.
+
+    Feedback and suggestions for improvement are most welcome.
+
+--------------------------------------------------------------------------------
+
     INSTALLATION
     
     See developer.android.com for tutorials on how to build Android apps
