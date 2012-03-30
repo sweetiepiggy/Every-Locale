@@ -186,7 +186,7 @@ public class EveryLocaleActivity extends Activity {
 		language_map.clear();
 		
 		ArrayAdapter<String> language_names = new ArrayAdapter<String>(this,
-	        		R.layout.list_language_names);
+	        		R.layout.list);
 
 	        for (String language : Locale.getISOLanguages()) {
 	        		Locale locale = new Locale(language);
@@ -214,7 +214,7 @@ public class EveryLocaleActivity extends Activity {
 		country_map.clear();
 		
         ArrayAdapter<String> country_names = new ArrayAdapter<String>(this,
-        		R.layout.list_country_names);
+        		R.layout.list);
 
         String default_language = Locale.getDefault().getLanguage();
         
