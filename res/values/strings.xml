@@ -4,7 +4,7 @@
 
     This file is part of Every Locale.
 
-	Every Locale is free software; you can redistribute it and/or modify
+    Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 3 of the License, or
     (at your option) any later version.
@@ -19,12 +19,12 @@
 -->
 <resources>
 
-    <string name="app_name">Every Locale</string>
-    <string name="language">Language</string>
-    <string name="country">Country</string>
-    <string name="variant">Variant</string>
-    <string name="about">About</string>
-    <string name="gpl">
+	<string name="app_name">Every Locale</string>
+	<string name="language">Language</string>
+	<string name="country">Country</string>
+	<string name="variant">Variant</string>
+	<string name="about">About</string>
+	<string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ Every Locale is distributed in the hope that it will be useful,
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.\n\n
 You should have received a copy of the GNU General Public License
-    along with Every Locale; if not, see http://www.gnu.org/licenses/.  
-    </string>
+    along with Every Locale; if not, see http://www.gnu.org/licenses/.
+	</string>
 
 </resources>
