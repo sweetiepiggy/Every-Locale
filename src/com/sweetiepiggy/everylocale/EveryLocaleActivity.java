@@ -181,7 +181,7 @@ public class EveryLocaleActivity extends Activity {
 	private void create_language_list() {
 		language_map.clear();
 
-		ArrayAdapter<String> language_names = new ArrayAdapter<String>(this, R.layout.list);
+		ArrayAdapter<String> language_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
 		for (String language : Locale.getISOLanguages()) {
 			Locale locale = new Locale(language);
@@ -208,7 +208,7 @@ public class EveryLocaleActivity extends Activity {
 	private void create_country_list() {
 		country_map.clear();
 
-		ArrayAdapter<String> country_names = new ArrayAdapter<String>(this, R.layout.list);
+		ArrayAdapter<String> country_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
 		String default_language = Locale.getDefault().getLanguage();
 
