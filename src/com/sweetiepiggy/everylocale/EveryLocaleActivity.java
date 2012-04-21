@@ -41,8 +41,10 @@ import android.widget.EditText;
 
 
 public class EveryLocaleActivity extends Activity {
-	HashMap<String, String> language_map = new HashMap<String, String>();
-	HashMap<String, String> country_map = new HashMap<String, String>();
+	private HashMap<String, String> language_map = new HashMap<String, String>();
+	private HashMap<String, String> country_map = new HashMap<String, String>();
+
+	private boolean m_lang_touched;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -54,79 +56,17 @@ public class EveryLocaleActivity extends Activity {
 
 		Button save_button = (Button)findViewById(R.id.save_button);
 		save_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
-				String country = ((AutoCompleteTextView) findViewById(R.id.country_autocomplete)).getText().toString();
-				String variant = ((EditText) findViewById(R.id.variant_edittext)).getText().toString();
-
-				String language_code = language_map.containsKey(language) ?
-					language_map.get(language) : language;
-				String country_code = country_map.containsKey(country) ?
-					country_map.get(country) : country;
-
-				try {
-					Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
-					Class IActivityManager = Class.forName("android.app.IActivityManager");
-
-					Method getDefault =  ActivityManagerNative.getMethod("getDefault", null);
-					Object am = IActivityManager.cast(getDefault.invoke(ActivityManagerNative, null));
-
-					Method getConfiguration = am.getClass().getMethod("getConfiguration", null);
-
-					Configuration config = (Configuration) getConfiguration.invoke(am, null);
-					Locale locale = new Locale(language_code, country_code, variant);
-					Locale.setDefault(locale);
-					config.locale = locale;
-
-					Class[] args = new Class[1];
-					args[0] = Configuration.class;
-					Method updateConfiguration = am.getClass().getMethod("updateConfiguration", args);
-					updateConfiguration.invoke(am, config);
-					init();
-				} catch (Exception e) {
-				}
+			public void onClick(View v)
+			{
+				save();
 			}
 		});
 
 		Button cancel_button = (Button)findViewById(R.id.cancel_button);
-
 		cancel_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Locale default_locale = Locale.getDefault();
-				String language_name = default_locale.getDisplayLanguage();
-				String country_name = default_locale.getDisplayCountry();
-				String variant_code = default_locale.getVariant();
-
-				AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
-				language_autocomplete.setText(language_name);
-
-				AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
-				country_autocomplete.setText(country_name);
-				((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
-
-				/* don't pop up drop down menu when programmatically entering text */
-				language_autocomplete.setDropDownHeight(0);
-				language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
-					public boolean onTouch(View v, MotionEvent event) {
-						AutoCompleteTextView language_autocomplete =
-							((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
-						language_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
-						language_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
-						language_autocomplete.onTouchEvent(event);
-						return true;
-					}
-				});
-
-				country_autocomplete.setDropDownHeight(0);
-				country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
-					public boolean onTouch(View v, MotionEvent event) {
-						AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
-						country_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
-						country_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
-						country_autocomplete.onTouchEvent(event);
-						return true;
-					}
-				});
+			public void onClick(View v)
+			{
+				cancel();
 			}
 		});
 	}
@@ -151,17 +91,21 @@ public class EveryLocaleActivity extends Activity {
 	}
 
 	private void init() {
-		create_language_list();
-		create_country_list();
-
 		Locale default_locale = Locale.getDefault();
 		String language_name = default_locale.getDisplayLanguage();
 		String country_name = default_locale.getDisplayCountry();
 		String variant_code = default_locale.getVariant();
+		m_lang_touched = false;
+
+		create_language_list();
+		create_country_list(default_locale.getLanguage());
 
 		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
 		language_autocomplete.setText(language_name);
-		((AutoCompleteTextView)findViewById(R.id.country_autocomplete)).setText(country_name);
+
+		AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
+		country_autocomplete.setText(country_name);
+
 		((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
 
 		language_autocomplete.setInputType(InputType.TYPE_NULL);
@@ -169,10 +113,94 @@ public class EveryLocaleActivity extends Activity {
 
 		language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
-				language_autocomplete.setDropDownHeight(LayoutParams.WRAP_CONTENT);
-				language_autocomplete.setInputType(InputType.TYPE_CLASS_TEXT);
-				language_autocomplete.onTouchEvent(event);
+				m_lang_touched = true;
+				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
+				((AutoCompleteTextView)v).setInputType(InputType.TYPE_CLASS_TEXT);
+				v.onTouchEvent(event);
+				return true;
+			}
+		});
+
+		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				if (m_lang_touched) {
+					m_lang_touched = false;
+					String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
+					String language_code = language_map.containsKey(language) ?
+						language_map.get(language) : language;
+					create_country_list(language_code);
+				}
+				v.onTouchEvent(event);
+				return true;
+			}
+		});
+	}
+
+	private void save()
+	{
+		String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
+		String country = ((AutoCompleteTextView) findViewById(R.id.country_autocomplete)).getText().toString();
+		String variant = ((EditText) findViewById(R.id.variant_edittext)).getText().toString();
+
+		String language_code = language_map.containsKey(language) ?
+			language_map.get(language) : language;
+		String country_code = country_map.containsKey(country) ?
+			country_map.get(country) : country;
+
+		try {
+			Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+			Class IActivityManager = Class.forName("android.app.IActivityManager");
+
+			Method getDefault =  ActivityManagerNative.getMethod("getDefault", null);
+			Object am = IActivityManager.cast(getDefault.invoke(ActivityManagerNative, null));
+
+			Method getConfiguration = am.getClass().getMethod("getConfiguration", null);
+
+			Configuration config = (Configuration) getConfiguration.invoke(am, null);
+			Locale locale = new Locale(language_code, country_code, variant);
+			Locale.setDefault(locale);
+			config.locale = locale;
+
+			Class[] args = new Class[1];
+			args[0] = Configuration.class;
+			Method updateConfiguration = am.getClass().getMethod("updateConfiguration", args);
+			updateConfiguration.invoke(am, config);
+			init();
+		} catch (Exception e) {
+			throw new Error(e);
+		}
+	}
+
+	private void cancel()
+	{
+		Locale default_locale = Locale.getDefault();
+		String language_name = default_locale.getDisplayLanguage();
+		String country_name = default_locale.getDisplayCountry();
+		String variant_code = default_locale.getVariant();
+
+		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
+		language_autocomplete.setText(language_name);
+
+		AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
+		country_autocomplete.setText(country_name);
+		((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
+
+		/* don't pop up drop down menu when programmatically entering text */
+		language_autocomplete.setDropDownHeight(0);
+		language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
+				((AutoCompleteTextView)v).setInputType(InputType.TYPE_CLASS_TEXT);
+				v.onTouchEvent(event);
+				return true;
+			}
+		});
+
+		country_autocomplete.setDropDownHeight(0);
+		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
+				v.onTouchEvent(event);
 				return true;
 			}
 		});
@@ -205,15 +233,13 @@ public class EveryLocaleActivity extends Activity {
 		languageTextView.setAdapter(language_names);
 	}
 
-	private void create_country_list() {
+	private void create_country_list(String lang) {
 		country_map.clear();
 
 		ArrayAdapter<String> country_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
-		String default_language = Locale.getDefault().getLanguage();
-
 		for (String country : Locale.getISOCountries()) {
-			Locale locale = new Locale(default_language, country);
+			Locale locale = new Locale(lang, country);
 			String local_name = locale.getDisplayCountry();
 			String native_name = locale.getDisplayCountry(locale);
 
