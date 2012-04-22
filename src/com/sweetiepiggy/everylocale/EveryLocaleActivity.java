@@ -27,23 +27,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
 
 
 public class EveryLocaleActivity extends Activity {
 	private HashMap<String, String> language_map = new HashMap<String, String>();
 	private HashMap<String, String> country_map = new HashMap<String, String>();
 
+	/** true if country_map has not been updated since language has been changed */
 	private boolean m_lang_touched;
 
 	/** Called when the activity is first created. */
@@ -53,22 +53,6 @@ public class EveryLocaleActivity extends Activity {
 		setContentView(R.layout.main);
 
 		init();
-
-		Button save_button = (Button)findViewById(R.id.save_button);
-		save_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v)
-			{
-				save();
-			}
-		});
-
-		Button cancel_button = (Button)findViewById(R.id.cancel_button);
-		cancel_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v)
-			{
-				cancel();
-			}
-		});
 	}
 
 	@Override
@@ -100,29 +84,28 @@ public class EveryLocaleActivity extends Activity {
 		create_language_list();
 		create_country_list(default_locale.getLanguage());
 
+		/* request focus on table layout so autocomplete does not pop down */
+		((TableLayout) findViewById(R.id.table_layout)).requestFocus();
+
 		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
 		language_autocomplete.setText(language_name);
 
 		AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
 		country_autocomplete.setText(country_name);
 
+		/* TODO: should getDisplayVariant be used to display variant name instead of code? */
 		((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
-
-		language_autocomplete.setInputType(InputType.TYPE_NULL);
-		language_autocomplete.setDropDownHeight(0);
 
 		language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				m_lang_touched = true;
-				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
-				((AutoCompleteTextView)v).setInputType(InputType.TYPE_CLASS_TEXT);
-				v.onTouchEvent(event);
-				return true;
+				return v.onTouchEvent(event);
 			}
 		});
 
 		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
+				/* rebuild country list if language has changed */
 				if (m_lang_touched) {
 					m_lang_touched = false;
 					String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
@@ -130,8 +113,23 @@ public class EveryLocaleActivity extends Activity {
 						language_map.get(language) : language;
 					create_country_list(language_code);
 				}
-				v.onTouchEvent(event);
-				return true;
+				return v.onTouchEvent(event);
+			}
+		});
+
+		Button save_button = (Button)findViewById(R.id.save_button);
+		save_button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v)
+			{
+				save();
+			}
+		});
+
+		Button cancel_button = (Button)findViewById(R.id.cancel_button);
+		cancel_button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v)
+			{
+				cancel();
 			}
 		});
 	}
@@ -165,6 +163,7 @@ public class EveryLocaleActivity extends Activity {
 			args[0] = Configuration.class;
 			Method updateConfiguration = am.getClass().getMethod("updateConfiguration", args);
 			updateConfiguration.invoke(am, config);
+
 			init();
 		} catch (Exception e) {
 			throw new Error(e);
@@ -178,32 +177,16 @@ public class EveryLocaleActivity extends Activity {
 		String country_name = default_locale.getDisplayCountry();
 		String variant_code = default_locale.getVariant();
 
+		/* request focus on table layout so autocomplete does not pop down */
+		((TableLayout) findViewById(R.id.table_layout)).requestFocus();
+
 		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
 		language_autocomplete.setText(language_name);
 
 		AutoCompleteTextView country_autocomplete = ((AutoCompleteTextView)findViewById(R.id.country_autocomplete));
 		country_autocomplete.setText(country_name);
+
 		((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
-
-		/* don't pop up drop down menu when programmatically entering text */
-		language_autocomplete.setDropDownHeight(0);
-		language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
-				((AutoCompleteTextView)v).setInputType(InputType.TYPE_CLASS_TEXT);
-				v.onTouchEvent(event);
-				return true;
-			}
-		});
-
-		country_autocomplete.setDropDownHeight(0);
-		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				((AutoCompleteTextView)v).setDropDownHeight(LayoutParams.WRAP_CONTENT);
-				v.onTouchEvent(event);
-				return true;
-			}
-		});
 	}
 
 	private void create_language_list() {
