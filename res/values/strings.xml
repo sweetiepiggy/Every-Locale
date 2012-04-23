@@ -18,12 +18,16 @@
     along with Every Locale; if not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-
 	<string name="app_name">Every Locale</string>
 	<string name="language">Language</string>
 	<string name="country">Country</string>
 	<string name="variant">Variant</string>
 	<string name="about">About</string>
+	<string name="warning">Warning</string>
+	<string name="unknown_language">Unknown language</string>
+	<string name="unknown_country">Unknown country</string>
+	<string name="save_anyway">OK</string>
+	<string name="cancel">Cancel</string>
 	<string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify
@@ -37,5 +41,5 @@ Every Locale is distributed in the hope that it will be useful,
 You should have received a copy of the GNU General Public License
     along with Every Locale; if not, see http://www.gnu.org/licenses/.
 	</string>
-
 </resources>
+

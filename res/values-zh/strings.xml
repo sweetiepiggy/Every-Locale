@@ -4,7 +4,7 @@
 
     This file is part of Every Locale.
 
-	Every Locale is free software; you can redistribute it and/or modify
+    Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 3 of the License, or
     (at your option) any later version.
@@ -19,21 +19,23 @@
 -->
 <resources>
 	<string name="app_name">各个地区</string>
-    <string name="language">语言</string>
-    <string name="country">国家</string>
-    <string name="variant">变种</string>
-    <string name="about">关于</string>
-    <string name="gpl">
-Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
-Every Locale is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.\n\n
-Every Locale is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.\n\n
-You should have received a copy of the GNU General Public License
-    along with Every Locale; if not, see http://www.gnu.org/licenses/.  
-    </string>
+	<string name="language">语言</string>
+	<string name="country">国家</string>
+	<string name="variant">变种</string>
+	<string name="about">关于</string>
+	<string name="warning">警告</string>
+	<string name="unknown_language">未知语言</string>
+	<string name="unknown_country">未知国家</string>
+	<string name="save_anyway">继续</string>
+	<string name="cancel">取消</string>
+	<string name="gpl">
+版權所有(C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
+
+各个地区爲自由軟體；您可依據自由軟體基金會所發表的GNU通用公共授權條款，對本程式再次發佈和/或修改；無論您依據的是本授權的第三版，或（您可選的）任一日後發行的版本。\n\n
+
+各个地区是基於使用目的而加以發佈，然而不負任何擔保責任；亦無對適售性或特定目的適用性所爲的默示性擔保。詳情請參照GNU通用公共授權。\n\n
+
+您應已收到附隨於各个地区的GNU通用公共授權的副本；如果沒有，請參照http://www.gnu.org/licenses/。
+	</string>
 </resources>
+
