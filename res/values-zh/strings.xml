@@ -4,7 +4,7 @@
 
     This file is part of Every Locale.
 
-	Every Locale is free software; you can redistribute it and/or modify
+    Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 3 of the License, or
     (at your option) any later version.
@@ -19,16 +19,16 @@
 -->
 <resources>
 	<string name="app_name">各个地区</string>
-    <string name="language">语言</string>
-    <string name="country">国家</string>
-    <string name="variant">变种</string>
-    <string name="about">关于</string>
-    <string name="warning">警告</string>
-    <string name="unknown_language">未知语言</string>
-    <string name="unknown_country">未知国家</string>
-    <string name="save_anyway">继续</string>
-    <string name="cancel">取消</string>
-    <string name="gpl">
+	<string name="language">语言</string>
+	<string name="country">国家</string>
+	<string name="variant">变种</string>
+	<string name="about">关于</string>
+	<string name="warning">警告</string>
+	<string name="unknown_language">未知语言</string>
+	<string name="unknown_country">未知国家</string>
+	<string name="save_anyway">继续</string>
+	<string name="cancel">取消</string>
+	<string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ Every Locale is distributed in the hope that it will be useful,
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.\n\n
 You should have received a copy of the GNU General Public License
-    along with Every Locale; if not, see http://www.gnu.org/licenses/.  
-    </string>
+    along with Every Locale; if not, see http://www.gnu.org/licenses/.
+	</string>
 </resources>
+
