@@ -27,6 +27,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,7 +46,7 @@ public class EveryLocaleActivity extends Activity {
 	private HashMap<String, String> country_map = new HashMap<String, String>();
 
 	/** true if country_map has not been updated since language has been changed */
-	private boolean m_lang_touched;
+	private boolean m_lang_changed;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -79,7 +81,7 @@ public class EveryLocaleActivity extends Activity {
 		String language_name = default_locale.getDisplayLanguage();
 		String country_name = default_locale.getDisplayCountry();
 		String variant_code = default_locale.getVariant();
-		m_lang_touched = false;
+		m_lang_changed = false;
 
 		create_language_list();
 		create_country_list(default_locale.getLanguage());
@@ -96,18 +98,20 @@ public class EveryLocaleActivity extends Activity {
 		/* TODO: should getDisplayVariant be used to display variant name instead of code? */
 		((EditText)findViewById(R.id.variant_edittext)).setText(variant_code);
 
-		language_autocomplete.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View v, MotionEvent event) {
-				m_lang_touched = true;
-				return v.onTouchEvent(event);
+		language_autocomplete.addTextChangedListener(new TextWatcher(){
+			public void afterTextChanged(Editable s) {
+				m_lang_changed = true;
 			}
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 		});
+
 
 		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				/* rebuild country list if language has changed */
-				if (m_lang_touched) {
-					m_lang_touched = false;
+				if (m_lang_changed) {
+					m_lang_changed = false;
 					String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
 					String language_code = language_map.containsKey(language) ?
 						language_map.get(language) : language;
