@@ -24,6 +24,11 @@
     <string name="country">Negara</string>
     <string name="variant">Varian</string>
     <string name="about">Maklumat</string>
+    <string name="warning">Amaran</string>
+    <string name="unknown_language">Bahasa tidak diketahui</string>
+    <string name="unknown_country">Negara tidak diketahui</string>
+    <string name="save_anyway">Ya</string>
+    <string name="cancel">Membatalkan</string>
     <string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify

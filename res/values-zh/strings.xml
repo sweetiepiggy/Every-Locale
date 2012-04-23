@@ -23,6 +23,11 @@
     <string name="country">国家</string>
     <string name="variant">变种</string>
     <string name="about">关于</string>
+    <string name="warning">警告</string>
+    <string name="unknown_language">未知语言</string>
+    <string name="unknown_country">未知国家</string>
+    <string name="save_anyway">继续</string>
+    <string name="cancel">取消</string>
     <string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify

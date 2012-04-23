@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -46,7 +48,7 @@ public class EveryLocaleActivity extends Activity {
 	private HashMap<String, String> country_map = new HashMap<String, String>();
 
 	/** true if country_map has not been updated since language has been changed */
-	private boolean m_lang_changed;
+	private boolean m_need_rebuild_countries;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -81,7 +83,7 @@ public class EveryLocaleActivity extends Activity {
 		String language_name = default_locale.getDisplayLanguage();
 		String country_name = default_locale.getDisplayCountry();
 		String variant_code = default_locale.getVariant();
-		m_lang_changed = false;
+		m_need_rebuild_countries = false;
 
 		create_language_list();
 		create_country_list(default_locale.getLanguage());
@@ -100,7 +102,7 @@ public class EveryLocaleActivity extends Activity {
 
 		language_autocomplete.addTextChangedListener(new TextWatcher(){
 			public void afterTextChanged(Editable s) {
-				m_lang_changed = true;
+				m_need_rebuild_countries = true;
 			}
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 			public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -110,11 +112,11 @@ public class EveryLocaleActivity extends Activity {
 		country_autocomplete.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				/* rebuild country list if language has changed */
-				if (m_lang_changed) {
-					m_lang_changed = false;
+				if (m_need_rebuild_countries) {
+					m_need_rebuild_countries = false;
 					String language = ((AutoCompleteTextView) findViewById(R.id.language_autocomplete)).getText().toString();
-					String language_code = language_map.containsKey(language) ?
-						language_map.get(language) : language;
+					String language_code = language_map.containsKey(language.toLowerCase()) ?
+						language_map.get(language.toLowerCase()) : language;
 					create_country_list(language_code);
 				}
 				return v.onTouchEvent(event);
@@ -144,11 +146,61 @@ public class EveryLocaleActivity extends Activity {
 		String country = ((AutoCompleteTextView) findViewById(R.id.country_autocomplete)).getText().toString();
 		String variant = ((EditText) findViewById(R.id.variant_edittext)).getText().toString();
 
-		String language_code = language_map.containsKey(language) ?
-			language_map.get(language) : language;
-		String country_code = country_map.containsKey(country) ?
-			country_map.get(country) : country;
+		String language_code;
+		String country_code;
 
+		boolean language_code_found = false;
+		boolean country_code_found = false;
+		String msg = "";
+
+		if (language_map.containsKey(language.toLowerCase())) {
+			language_code = language_map.get(language.toLowerCase());
+			language_code_found = true;
+		} else {
+			language_code = language;
+			msg += getResources().getString(R.string.unknown_language) +
+				": \"" + language + "\"";
+		}
+
+		if (country_map.containsKey(country.toLowerCase())) {
+			country_code = country_map.get(country.toLowerCase());
+			country_code_found = true;
+		} else {
+			country_code = country;
+			if (msg.length() != 0) {
+				msg += '\n';
+			}
+			msg += getResources().getString(R.string.unknown_country) +
+				": \"" + country + "\"";
+		}
+
+		if (!language_code_found || !country_code_found) {
+			prompt_continue(msg, language_code, country_code, variant);
+		} else {
+			update_configuration(language_code, country_code, variant);
+		}
+	}
+
+	private void prompt_continue(String msg, final String language_code,
+			final String country_code, final String variant)
+	{
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle(getResources().getString(R.string.warning));
+		alert.setMessage(msg);
+		alert.setPositiveButton(R.string.save_anyway, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				update_configuration(language_code, country_code, variant);
+			}
+		});
+		alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		alert.show();
+	}
+
+	private void update_configuration(String language_code, String country_code, String variant)
+	{
 		try {
 			Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
 			Class IActivityManager = Class.forName("android.app.IActivityManager");
@@ -198,21 +250,22 @@ public class EveryLocaleActivity extends Activity {
 
 		ArrayAdapter<String> language_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
-		for (String language : Locale.getISOLanguages()) {
-			Locale locale = new Locale(language);
+		for (String language_code : Locale.getISOLanguages()) {
+			Locale locale = new Locale(language_code);
 			String local_name = locale.getDisplayLanguage();
 			String native_name = locale.getDisplayLanguage(locale);
 
-			language_names.add(language);
+			language_names.add(language_code);
+			language_map.put(language_code.toLowerCase(), language_code);
 
-			if (!local_name.equals(language)) {
+			if (!local_name.equals(language_code)) {
 				language_names.add(local_name);
+				language_map.put(local_name.toLowerCase(), language_code);
 			}
 
-			language_map.put(local_name, language);
 			if (!local_name.equals(native_name)) {
 				language_names.add(native_name);
-				language_map.put(native_name, language);
+				language_map.put(native_name.toLowerCase(), language_code);
 			}
 		}
 
@@ -225,21 +278,23 @@ public class EveryLocaleActivity extends Activity {
 
 		ArrayAdapter<String> country_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
-		for (String country : Locale.getISOCountries()) {
-			Locale locale = new Locale(lang, country);
+		for (String country_code : Locale.getISOCountries()) {
+			Locale locale = new Locale(lang, country_code);
 			String local_name = locale.getDisplayCountry();
 			String native_name = locale.getDisplayCountry(locale);
 
-			country_names.add(country);
+			country_names.add(country_code);
+			country_map.put(country_code.toLowerCase(), country_code);
 
-			if (!local_name.equals(country)) {
+			if (!local_name.equals(country_code)) {
 				country_names.add(local_name);
+				country_map.put(local_name.toLowerCase(), country_code);
 			}
 
-			country_map.put(local_name, country);
+			country_map.put(local_name.toLowerCase(), country_code);
 			if (!local_name.equals(native_name)) {
 				country_names.add(native_name);
-				country_map.put(native_name, country);
+				country_map.put(native_name.toLowerCase(), country_code);
 			}
 		}
 
