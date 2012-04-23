@@ -220,25 +220,31 @@ public class EveryLocaleActivity extends Activity {
 		languageTextView.setAdapter(language_names);
 	}
 
-	private void create_country_list(String lang_code) {
+	private void create_country_list(String lang) {
 		country_map.clear();
 
 		ArrayAdapter<String> country_names = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
 
-		for (String country_code : Locale.getISOCountries()) {
-			Locale locale = new Locale(lang_code, country_code);
+		for (String country : Locale.getISOCountries()) {
+			Locale locale = new Locale(lang, country);
 			String local_name = locale.getDisplayCountry();
-			String country_name = locale.getDisplayCountry(locale);
+			String native_name = locale.getDisplayCountry(locale);
 
-			country_names.add(country_code);
+			country_names.add(country);
 
-			if (!country_name.equals(country_code)) {
-				country_names.add(country_name);
-				country_map.put(country_name, country_code);
+			if (!local_name.equals(country)) {
+				country_names.add(local_name);
+			}
+
+			country_map.put(local_name, country);
+			if (!local_name.equals(native_name)) {
+				country_names.add(native_name);
+				country_map.put(native_name, country);
 			}
 		}
 
-		((AutoCompleteTextView) findViewById(R.id.country_autocomplete)).setAdapter(country_names);
+		AutoCompleteTextView countryTextView = (AutoCompleteTextView) findViewById(R.id.country_autocomplete);
+		countryTextView.setAdapter(country_names);
 	}
 }
 
