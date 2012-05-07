@@ -185,14 +185,14 @@ public class EveryLocaleActivity extends Activity {
 			final String country_code, final String variant)
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle(getResources().getString(R.string.warning));
+		alert.setTitle(getResources().getString(android.R.string.dialog_alert_title));
 		alert.setMessage(msg);
-		alert.setPositiveButton(R.string.save_anyway, new DialogInterface.OnClickListener() {
+		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				update_configuration(language_code, country_code, variant);
 			}
 		});
-		alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+		alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 			}
 		});
