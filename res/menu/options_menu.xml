@@ -5,12 +5,12 @@
 
     This file is part of Every Locale.
 
-	Every Locale is free software; you can redistribute it and/or modify
+    Every Locale is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 3 of the License, or
     (at your option) any later version.
 
-    Every Locale  is distributed in the hope that it will be useful,
+    Every Locale is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -21,8 +21,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 	<item android:id="@+id/settings"
-        android:icon="@android:drawable/ic_dialog_info"
-        android:title="@string/about"
-	    />
-
+		android:icon="@android:drawable/ic_dialog_info"
+		android:title="@string/about"/>
+	<item android:id="@+id/source"
+		android:icon="@android:drawable/ic_menu_view"
+		android:title="@string/view_source" />
 </menu>
+

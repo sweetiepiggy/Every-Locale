@@ -28,6 +28,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,7 +44,10 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 
 
-public class EveryLocaleActivity extends Activity {
+public class EveryLocaleActivity extends Activity
+{
+	private static final String SOURCE_URL = "https://github.com/sweetiepiggy/Every-Locale";
+
 	private HashMap<String, String> language_map = new HashMap<String, String>();
 	private HashMap<String, String> country_map = new HashMap<String, String>();
 
@@ -72,6 +76,11 @@ public class EveryLocaleActivity extends Activity {
 		case R.id.settings:
 			Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
 			startActivity(intent);
+			return true;
+		case R.id.source:
+			intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse(SOURCE_URL), "text/html");
+			startActivity(Intent.createChooser(intent, getResources().getString(R.string.open_browser)));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
