@@ -80,7 +80,7 @@ public class EveryLocaleActivity extends Activity
 		case R.id.source:
 			intent = new Intent(Intent.ACTION_VIEW);
 			intent.setDataAndType(Uri.parse(SOURCE_URL), "text/html");
-			startActivity(Intent.createChooser(intent, getResources().getString(R.string.open_browser)));
+			startActivity(Intent.createChooser(intent, null));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
