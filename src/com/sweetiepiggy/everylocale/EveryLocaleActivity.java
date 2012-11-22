@@ -42,7 +42,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
-
+import android.widget.Toast;
 
 public class EveryLocaleActivity extends Activity
 {
@@ -231,7 +231,9 @@ public class EveryLocaleActivity extends Activity
 
 			init();
 		} catch (Exception e) {
-			throw new Error(e);
+			Toast.makeText(this,
+					(new Error(e)).getMessage(),
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
