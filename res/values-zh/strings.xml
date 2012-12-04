@@ -26,6 +26,7 @@
 	<string name="unknown_language">未知语言</string>
 	<string name="unknown_country">未知国家</string>
 	<string name="view_source">代码来源</string>
+	<string name="permission_denied">CHANGE_CONFIGURATION权限被拒绝</string>
 	<string name="gpl">
 版權所有(C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 

@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -210,29 +211,35 @@ public class EveryLocaleActivity extends Activity
 
 	private void update_configuration(String language_code, String country_code, String variant)
 	{
-		try {
-			Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
-			Class IActivityManager = Class.forName("android.app.IActivityManager");
+		if (getPackageManager().checkPermission("android.permission.CHANGE_CONFIGURATION", getPackageName()) ==
+				PackageManager.PERMISSION_GRANTED) {
+			try {
+				Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+				Class IActivityManager = Class.forName("android.app.IActivityManager");
 
-			Method getDefault =  ActivityManagerNative.getMethod("getDefault", null);
-			Object am = IActivityManager.cast(getDefault.invoke(ActivityManagerNative, null));
+				Method getDefault =  ActivityManagerNative.getMethod("getDefault", null);
+				Object am = IActivityManager.cast(getDefault.invoke(ActivityManagerNative, null));
 
-			Method getConfiguration = am.getClass().getMethod("getConfiguration", null);
+				Method getConfiguration = am.getClass().getMethod("getConfiguration", null);
 
-			Configuration config = (Configuration) getConfiguration.invoke(am, null);
-			Locale locale = new Locale(language_code, country_code, variant);
-			Locale.setDefault(locale);
-			config.locale = locale;
+				Configuration config = (Configuration) getConfiguration.invoke(am, null);
+				Locale locale = new Locale(language_code, country_code, variant);
+				Locale.setDefault(locale);
+				config.locale = locale;
 
-			Class[] args = new Class[1];
-			args[0] = Configuration.class;
-			Method updateConfiguration = am.getClass().getMethod("updateConfiguration", args);
-			updateConfiguration.invoke(am, config);
+				Class[] args = new Class[1];
+				args[0] = Configuration.class;
+				Method updateConfiguration = am.getClass().getMethod("updateConfiguration", args);
+				updateConfiguration.invoke(am, config);
 
-			init();
-		} catch (Exception e) {
-			Toast.makeText(this,
-					(new Error(e)).getMessage(),
+				init();
+			} catch (Exception e) {
+				Toast.makeText(this,
+						(new Error(e)).getMessage(),
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			Toast.makeText(this, getResources().getString(R.string.permission_denied),
 					Toast.LENGTH_SHORT).show();
 		}
 	}

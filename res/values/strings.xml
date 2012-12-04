@@ -26,6 +26,7 @@
 	<string name="unknown_language">Unknown language</string>
 	<string name="unknown_country">Unknown country</string>
 	<string name="view_source">View Source</string>
+	<string name="permission_denied">CHANGE_CONFIGURATION permission denied</string>
 	<string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Every Locale is free software; you can redistribute it and/or modify

@@ -26,6 +26,7 @@
 	<string name="unknown_language">Bahasa tidak diketahui</string>
 	<string name="unknown_country">Negara tidak diketahui</string>
 	<string name="view_source">Sumber</string>
+	<string name="permission_denied">Keizinan CHANGE_CONFIGURATION ditolak</string>
 	<string name="gpl">
 Copyright (C) 2012 Sweetie Piggy Apps sweetiepiggyapps@gmail.com\n\n
 Setiap Lokal adalah perisian bebas; anda boleh memaparkan dan / atau mengubah suai
