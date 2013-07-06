@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2012 Sweetie Piggy Apps <sweetiepiggyapps@gmail.com>
+
+    This file is part of Every Locale.
+
+    Every Locale is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    Every Locale is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Every Locale; if not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/table_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:stretchColumns="1">
+		<TableRow>
+			<TextView
+				android:id="@+id/set_language_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="10dp"
+				android:layout_weight="1"
+				style="@android:style/TextAppearance.Large"
+				android:text="@string/language" />
+		</TableRow>
+		<TableRow>
+			<AutoCompleteTextView
+				android:id="@+id/language_autocomplete"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:drawableLeft="@android:drawable/ic_btn_speak_now"
+				android:layout_weight="1"
+				android:text="" />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/set_country_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="10dp"
+				android:layout_weight="1"
+				style="@android:style/TextAppearance.Large"
+				android:text="@string/country" />
+		</TableRow>
+		<TableRow>
+			<AutoCompleteTextView
+				android:id="@+id/country_autocomplete"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableLeft="@android:drawable/ic_menu_myplaces"
+				android:text="" />
+		</TableRow>
+		<TableRow>
+			<TextView
+				android:id="@+id/variant_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="10dp"
+				android:layout_weight="1"
+				style="@android:style/TextAppearance.Large"
+				android:text="@string/variant" />
+		</TableRow>
+		<TableRow>
+			<AutoCompleteTextView
+				android:id="@+id/variant_edittext"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:drawableLeft="@android:drawable/ic_menu_share"
+				android:text="" />
+		</TableRow>
+		<TableRow
+			android:paddingTop="10dp">
+			<Button
+				android:id="@+id/save_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableTop="@android:drawable/ic_menu_save" />
+			<Button
+				android:id="@+id/cancel_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableTop="@android:drawable/ic_menu_close_clear_cancel" />
+		</TableRow>
+	</TableLayout>
+</ScrollView>
+
