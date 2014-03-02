@@ -22,79 +22,72 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/table_layout"
+	<LinearLayout
+		android:id="@+id/main_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:focusable="true"
 		android:focusableInTouchMode="true"
-		android:stretchColumns="1">
-		<TableRow>
-			<TextView
-				android:id="@+id/set_language_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:textStyle="bold"
-				android:text="@string/language" />
-		</TableRow>
-		<TableRow>
-			<AutoCompleteTextView
-				android:id="@+id/language_autocomplete"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:drawableLeft="@android:drawable/ic_btn_speak_now"
-				android:layout_weight="1"
-				android:text="" />
-		</TableRow>
-		<TableRow>
-			<TextView
-				android:id="@+id/set_country_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:textStyle="bold"
-				android:text="@string/country" />
-		</TableRow>
-		<TableRow>
-			<AutoCompleteTextView
-				android:id="@+id/country_autocomplete"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:drawableLeft="@android:drawable/ic_menu_myplaces"
-				android:text="" />
-		</TableRow>
-		<TableRow>
-			<TextView
-				android:id="@+id/variant_label"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:textStyle="bold"
-				android:text="@string/variant" />
-		</TableRow>
-		<TableRow>
-			<AutoCompleteTextView
-				android:id="@+id/variant_edittext"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:drawableLeft="@android:drawable/ic_menu_share"
-				android:text="" />
-		</TableRow>
-		<TableRow>
+		android:orientation="vertical" >
+		<TextView
+			android:id="@+id/set_language_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textStyle="bold"
+			android:text="@string/language" />
+		<AutoCompleteTextView
+			android:id="@+id/language_autocomplete"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@android:drawable/ic_btn_speak_now"
+			android:layout_weight="1"
+			android:text="" />
+		<TextView
+			android:id="@+id/set_country_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textStyle="bold"
+			android:text="@string/country" />
+		<AutoCompleteTextView
+			android:id="@+id/country_autocomplete"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableLeft="@android:drawable/ic_menu_myplaces"
+			android:text="" />
+		<TextView
+			android:id="@+id/variant_label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textStyle="bold"
+			android:text="@string/variant" />
+		<AutoCompleteTextView
+			android:id="@+id/variant_edittext"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableLeft="@android:drawable/ic_menu_share"
+			android:text="" />
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="horizontal" >
 			<Button
 				android:id="@+id/save_button"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:drawableTop="@android:drawable/ic_menu_save" />
 			<Button
 				android:id="@+id/cancel_button"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:drawableTop="@android:drawable/ic_menu_close_clear_cancel" />
-		</TableRow>
-	</TableLayout>
+		</LinearLayout>
+	</LinearLayout>
 </ScrollView>
 

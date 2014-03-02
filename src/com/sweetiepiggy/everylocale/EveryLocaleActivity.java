@@ -42,7 +42,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class EveryLocaleActivity extends Activity
@@ -99,7 +99,7 @@ public class EveryLocaleActivity extends Activity
 		create_country_list(default_locale.getLanguage());
 
 		/* request focus on table layout so autocomplete does not pop down */
-		((TableLayout) findViewById(R.id.table_layout)).requestFocus();
+		((LinearLayout) findViewById(R.id.main_layout)).requestFocus();
 
 		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
 		language_autocomplete.setText(language_name);
@@ -251,8 +251,8 @@ public class EveryLocaleActivity extends Activity
 		String country_name = default_locale.getDisplayCountry();
 		String variant_code = default_locale.getVariant();
 
-		/* request focus on table layout so autocomplete does not pop down */
-		((TableLayout) findViewById(R.id.table_layout)).requestFocus();
+		/* request focus on main layout so autocomplete does not pop down */
+		((LinearLayout) findViewById(R.id.main_layout)).requestFocus();
 
 		AutoCompleteTextView language_autocomplete = ((AutoCompleteTextView)findViewById(R.id.language_autocomplete));
 		language_autocomplete.setText(language_name);
